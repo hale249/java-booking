@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layouts/app.html}"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
+<head>
+    <title>Quản lý phòng</title>
+
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-8">
+                    <h4 class="card-title mb-0">
+                        Quản lý lịch
+                    </h4>
+                </div>
+                <div class="col-4 text-right">
+                    <a th:href="@{/admin/booking/create}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Tạo
+                        mới</a>
+                </div>
+            </div>
+
+            <form th:action="@{/admin/booking}" method="GET" class="form-inline mt-2">
+                <div class="form-group">
+                    <input type="text" name="searchText" id="searchText" class="form-control" th:value="${searchText}" placeholder="Nhập tên tìm kiếm...">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-same-select ml-2">Tìm kiếm</button>
+            </form>
+
+            <div class="mt-4">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <td><strong>STT</strong></td>
+                            <td><strong>Tên</strong></td>
+                            <td><strong>Email</strong></td>
+                            <td><strong>Ngày nhận phòng</strong></td>
+                            <td><strong>Ngày trả phòng</strong></td>
+                            <td><strong>Số người </strong></td>
+                            <td><strong>Số phòng </strong></td>
+                            <td><strong>Loại phòng </strong></td>
+                            <td><strong>ID phòng </strong></td>
+                            <td><strong>Tổng tiền </strong></td>
+                            <td><strong>Trạng thái</strong></td>
+                            <td><strong>Trạng thái thanh toán</strong></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="b : ${bookings.page}">
+                            <td th:text="${b.id}"></td>
+                            <td th:text="${b.name}"></td>
+                            <td th:text="${b.email}"></td>
+                            <td th:text="${#temporals.format(b.dateCheckin, 'dd-MM-yyyy')}"></td>
+                            <td th:text="${#temporals.format(b.dateCheckout, 'dd-MM-yyyy')}"></td>
+                            <td th:text="${b.numberOfPerson}"></td>
+                            <td th:text="${b.numberOfRoom}"></td>
+                            <td th:text="${b.roomType}"></td>
+                            <td th:text="${b.currentId}"></td>
+                            <td th:text="${b.price}"></td>
+                            <td th:text="${b.status}"></td>
+                            <td th:text="${b.payment}"></td>
+                            <!-- Button trigger modal -->
+                            <td>
+                                <div class="btn-group btn-group-sm" role="group" aria-label="Hành động">
+                                    <a th:href="@{'/admin/booking/edit/'+ ${b.id}}" data-toggle="tooltip" data-placement="top" title="Edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+                                    <a th:href="@{'/admin/booking/delete/'+${b.id}}"
+                                       class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination text-right" th:if="${bookings.page.totalPages > 0}">
+                            <li class="page-item"
+                                th:classappend="${!bookings.paging.isPrevEnabled()? 'disabled' : ''}">
+                                <a class="page-link"
+                                   th:href="@{'/admin/booking?current=' + ${bookings.paging.current - 1}}"
+                                   tabindex="-1">Trước</a>
+                            </li>
+                            <th:block th:each="item : ${bookings.paging.getItems()}">
+                                <li class="page-item"
+                                    th:classappend="${item.index == bookings.paging.current? 'active' : ''}"
+                                    th:if="${item.pageItemType.name() == 'PAGE'}"><a
+                                        class="page-link" th:href="@{'/admin/booking?current=' + ${item.index}}"
+                                        th:text="${item.index}"></a></li>
+                                <li class="page-item disabled"
+                                    th:if="${item.pageItemType.name() == 'DOTS'}"><a
+                                        class="page-link" href="#">...</a></li>
+                            </th:block>
+                            <li class="page-item"
+                                th:classappend="${!bookings.paging.isNextEnabled()? 'disabled' : ''}">
+                                <a class="page-link"
+                                   th:href="@{'/admin/booking?current=' + ${bookings.paging.current + 1}}">Tiếp</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

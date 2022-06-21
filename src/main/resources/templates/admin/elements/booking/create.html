@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layouts/app.html}"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout ">
+<head>
+    <meta charset="UTF-8">
+    <title>Tạo mới lịch</title>
+
+    <th:block layout:fragment="css">
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    </th:block>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="card">
+        <form th:action="@{/admin/booking/create}" method="post" class="form" th:object="${booking}"
+              enctype="multipart/form-data">
+            <div class="card-body">
+                <h4 class="card-title mb-0">
+                    Quản lý lịch đặt phòng
+                    <small class="text-muted">Tạo mới</small>
+                </h4>
+                <hr>
+
+                <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="name">Tên người đặt phòng</label>
+
+                    <div class="col-md-10">
+                        <input th:field="*{name}" type="text" class="form-control" id="name"
+                               placeholder="Nhập tên người đặt phòng...">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="email">Email</label>
+
+                    <div class="col-md-10">
+                        <input th:field="*{email}" type="text" required class="form-control" id="email"
+                               placeholder="Nhập email...">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="name">Đặt lúc</label>
+
+                    <div class="col-md-10">
+                        <input th:type="date"
+                               th:field="*{dateCheckin}"
+                               id="datetimepicker"
+                               type="text"
+                               required
+                               class="form-control"
+                               placeholder="09/29/2022"
+                        />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="name">Kết thúc lúc</label>
+                    <div class="col-md-10">
+                        <input
+                                th:type="date"
+                                th:field="*{dateCheckout}"
+                                id="datetimepicker-check"
+                                type="text"
+                                required
+                                class="form-control"
+                                placeholder="09/29/2022"
+                        />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="name">Số lượng người</label>
+                    <div class="col-md-10">
+                        <select
+                                th:field="*{numberOfPerson}"
+                                class="form-control">
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="name">Loại phòng</label>
+                    <div class="col-md-10">
+                        <select
+                                th:field="*{roomType}"
+                                class="form-control">
+                            <option value="Cơ bản">Cơ bản</option>
+                            <option value="Cao cấp">Cao cấp</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col">
+                        <a th:href="@{/admin}" class="btn btn-danger btn-sm">Trở lại</a>
+                    </div>
+
+                    <div class="col text-right">
+                        <button type="submit" class="btn btn-success btn-sm">
+                            Lưu
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<th:block layout:fragment="js">
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(".js-example-tokenizer").select2({
+            tags: true,
+            tokenSeparators: [',', ' ']
+        })
+    </script>
+</th:block>
+</body>
+</html>

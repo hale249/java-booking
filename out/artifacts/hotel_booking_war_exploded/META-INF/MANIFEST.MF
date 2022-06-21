@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Created-By: IntelliJ IDEA
+Built-By: admin
+Build-Jdk: 11.0.12
+Implementation-Title: hotel-booking
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: com
+Main-Class: ${start-class}
+
